@@ -50,7 +50,10 @@ if(isset($_POST['submit'])){
 <div class="form-container">
 
    <form action="" method="post">
+      
       <h3>Register Now</h3>
+      <img src="logo.png" >
+      
       <?php
       if(isset($error)){
          foreach($error as $error){
@@ -60,13 +63,35 @@ if(isset($_POST['submit'])){
       ?>
       <input type="text" name="name" required placeholder="Enter your name">
       <input type="email" name="email" required placeholder="Enter your email">
-      <input type="password" name="password" required placeholder="Enter your password">
-      <input type="password" name="cpassword" required placeholder="Confirm your password">
+  
+
+      <div style="position: relative;">
+    <input type="password" name="password" id="password" required placeholder="Enter your password">
+    <input type="password" name="cpassword" id="cpassword" required placeholder="Confirm your password">
+    <button type="button" onclick="showPassword()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+        Show password
+    </button>
+</div>
+
+<script>
+    function showPassword() {
+        var passwordField = document.getElementById("password");
+        var cpasswordField = document.getElementById("cpassword");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            cpasswordField.type = "text";
+        } else {
+            passwordField.type = "password";
+            cpasswordField.type = "password";
+        }
+    }
+</script>
+
       <select name="user_type">
          <option value="user">STUDENT</option>
          <option value="admin">PROFESSOR</option>
       </select>
-      <input type="submit" name="submit" value="Register Now" class="form-btn">
+      <input type="submit" name="submit" value="Register" class="form-btn">
       <p>Already have an account? <a href="login_form.php">Login Now</a></p>
    </form>
 
