@@ -27,7 +27,7 @@ if (!isset($_SESSION['admin_name'])) {
 
     <div class="content">
         <h3>Hi, <span>Professor</span></h3>
-        <h1>Welcome <span><?php echo $_SESSION['admin_name'] ?></span></h1>
+        <h1>Welcome Professor <span><?php echo $_SESSION['admin_name'] ?></span></h1>
         <p>This is a Professor page</p>
 
         <a href="logout.php" class="btn">Logout</a>
