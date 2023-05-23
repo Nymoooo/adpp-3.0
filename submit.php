@@ -23,15 +23,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Prepare and bind the statement
-    $stmt = $conn->prepare("INSERT INTO questions (question, option1, option2, option3, option4, answer) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $question, $option1, $option2, $option3, $option4, $answer);
+    // Check if the question already exists in the database
+    $checkQuery = "SELECT * FROM questions WHERE question = ?";
+    $stmt = $conn->prepare($checkQuery);
+    $stmt->bind_param("s", $question);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Execute the statement
-    if ($stmt->execute() === TRUE) {
-        echo "Question added successfully.";
+    if ($result->num_rows > 0) {
+        echo "Question already exists.";
     } else {
-        echo "Error: " . $stmt->error;
+        // Prepare and bind the statement
+        $insertQuery = "INSERT INTO questions (question, option1, option2, option3, option4, answer) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($insertQuery);
+        $stmt->bind_param("ssssss", $question, $option1, $option2, $option3, $option4, $answer);
+
+        // Execute the statement
+        if ($stmt->execute() === TRUE) {
+            echo "Question added successfully.";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
     }
 
     $stmt->close();
